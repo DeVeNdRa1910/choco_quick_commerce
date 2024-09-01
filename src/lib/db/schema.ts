@@ -2,6 +2,7 @@ import { sql } from "drizzle-orm";
 import { integer, pgTable, serial, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 //ye basically data ka model creation hai mongoDB ke terme me
+// migration supabase ke andar jo database hai(postgreSQL) usme ye table create karega
 
 export const users = pgTable("users",{
   id: serial("id").primaryKey(),
@@ -26,6 +27,6 @@ export const product = pgTable("products",{
   createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 })
 
-// migration supabase ke andar jo database hai(postgreSQL) usme ye table create karega
+//"db-generate": "drizzle-kit generate --config=drizzle.config.ts" create this scrit in packag.json
 
-
+// in schema se migrate script create hoti(SQL query) hai in drizzel folder

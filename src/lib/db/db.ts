@@ -4,8 +4,7 @@ import postgres from 'postgres'
 /* 
 drizzel ko mongoose ki traha treet karo bas antar ye hai ki mongoos se keval mongodb ke liye use hota hai lekin drizzel bhut sare DB k liye use hota hai.
 */
-//"db-generate": "drizzle-kit generate --config=drizzle.config.ts"
-//create this scrit in packag.json
+
 const queryString = process.env.POSTGRES_DB_URI as string;
 
 export const connection = postgres(queryString);
