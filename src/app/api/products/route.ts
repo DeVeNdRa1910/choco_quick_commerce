@@ -1,5 +1,5 @@
 import { db } from "@/lib/db/db";
-import { product } from "@/lib/db/schema";
+import { product } from "@/lib/db/models";
 import { isServer, productSchema } from "@/lib/validators/productSchema";
 import { writeFile, unlink } from "node:fs/promises";
 import path from "node:path";

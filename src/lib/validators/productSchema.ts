@@ -8,23 +8,3 @@ export const productSchema = z.object({
     description: z.string({ message: 'Product description should be a string' }).min(8),
     price: z.number({ message: 'Product price should be a number' }),
 });
-
-// export const userSchema = z.object({
-
-// })
-
-// export const orderSchema = z.object({
-  
-// })
-
-// export const invantoriSchema = z.object({
-
-// })
-
-// export const warehousSechema = z.object({
-
-// })
-
-// export const deliveryPersonSchema = z.object({
-
-// })
