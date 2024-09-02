@@ -29,6 +29,13 @@
       "when": 1725255635391,
       "tag": "0003_magenta_smiling_tiger",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1725281068446,
+      "tag": "0004_sparkling_silver_fox",
+      "breakpoints": true
     }
   ]
 }

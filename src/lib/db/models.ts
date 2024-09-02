@@ -54,27 +54,46 @@ export const warehouses = pgTable(
 
 export const orders = pgTable("Orders", {
   id: serial("id").primaryKey(),
-})
+});
 
 export const deliveriPersons = pgTable("Delivery_persons", {
   id: serial("id").primaryKey(),
   name: varchar("name", { length: 100 }).notNull(),
   phone: varchar("phone", { length: 13 }).notNull(),
-  warehouseId: integer("warehouse_id").references(() => {
-    // kis table ki konsi field ko forein key banana hai
-    return warehouses.id;
-    // onDelete-> yadi warehiuse delete hi jaye to delivery person ka kya karna hai, cascade ka matlab delivery_persons ko bhi detach kar dena
-  }, {onDelete: "cascade"}),
-  orderId: integer("order_id").references(() => {
-    return orders.id;
-    // order delete delete hone pr delivey_person ko job se nahi nikalna hai isiliye cascade nahi kar sakte hai , setnull-> orderId null hoi jayegi
-  }, {onDelete: "set null"}),
+  warehouseId: integer("warehouse_id").references(
+    () => {
+      // kis table ki konsi field ko forein key banana hai
+      return warehouses.id;
+      // onDelete-> yadi warehiuse delete hi jaye to delivery person ka kya karna hai, cascade ka matlab delivery_persons ko bhi detach kar dena
+    },
+    { onDelete: "cascade" }
+  ),
+  orderId: integer("order_id").references(
+    () => {
+      return orders.id;
+      // order delete delete hone pr delivey_person ko job se nahi nikalna hai isiliye cascade nahi kar sakte hai , setnull-> orderId null hoi jayegi
+    },
+    { onDelete: "set null" }
+  ),
   updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
   createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
 });
 
-
+export const inventories = pgTable("inventories", {
+  id: serial("id").primaryKey(),
+  sku: varchar("name", { length: 8 }).unique().notNull(),
+  orderId: integer("order_id").references(() => orders.id, {
+    onDelete: "set null",
+  }),
+  warehouseId: integer("warehouse_id").references(() => warehouses.id, {
+    onDelete: "cascade",
+  }),
+  productId: integer("product_id").references(() => product.id, {
+    onDelete: "cascade",
+  }),
+  updatedAt: timestamp("updated_at").default(sql`CURRENT_TIMESTAMP`),
+  createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
+});
 
 //"db-generate": "drizzle-kit generate --config=drizzle.config.ts" create this scrit in packag.json
-
 // in schema se migrate script create hoti(SQL query) hai in drizzel folder

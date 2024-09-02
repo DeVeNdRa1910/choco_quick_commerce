@@ -11,7 +11,7 @@ kyuki supabase me ham ek se jyada db ko use kar sakte hai like:- PostgreSQL, SQL
 // Data model ke table bnane ki SQL query ./drizzle folder me write karne ke liye
 
 export default defineConfig({
-  schema: './src/lib/db/schema.ts',
+  schema: './src/lib/db/models.ts',
   out: './drizzle',
   dialect: 'postgresql',
   dbCredentials: {

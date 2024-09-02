@@ -27,6 +27,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       {
         message: "Making of warehouse is failed",
+        error
       },
       { status: 500 }
     );
