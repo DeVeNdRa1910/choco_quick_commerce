@@ -1,7 +1,7 @@
 import { db } from "@/lib/db/db";
-import { deliveriPersons } from "@/lib/db/models";
+import { deliveriPersons, warehouses } from "@/lib/db/models";
 import { deliveryPersonSchema } from "@/lib/validators/deliveryPersonSchema";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -59,5 +59,46 @@ export async function POST(request: NextRequest) {
       },
       { status: 500 }
     );
+  }
+}
+
+export async function GET(request: NextRequest) {
+  try {
+    // here we joine delivery_Persons table with warehouses table
+/*     const fetchedDeliveryPersons = await db
+      .select()
+      .from(deliveriPersons)
+      .leftJoin(warehouses, eq(deliveriPersons.warehouseId, warehouses.id))
+      .orderBy(desc(deliveriPersons.id)); 
+      
+      itene se ware house ki puri table deliveryPersons me add ho jaygi but hame naam akela chahiye 
+
+      ham select ke andar likhenge ki hame kya kya chaihiye
+*/
+      const fetchedDeliveryPersons = await db
+      .select(
+        {
+          id: deliveriPersons.id,
+          name: deliveriPersons.name,
+          phone: deliveriPersons.phone,
+          warehouse: warehouses.name,
+          pincode: warehouses.pincode,
+        }
+      )
+      .from(deliveriPersons)
+      .leftJoin(warehouses, eq(deliveriPersons.warehouseId, warehouses.id))
+      .orderBy(desc(deliveriPersons.id));
+    return NextResponse.json(
+      {
+        message: "Fetched delivery persons successfully",
+        fetchedDeliveryPersons,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json({
+      message: "Failed to fetched delivery persons",
+      error,
+    });
   }
 }
