@@ -10,7 +10,7 @@ function makeQueryClient(){
 }
 
 function getQueryClient(){
-  if(typeof window === undefined){
+  if(typeof window === 'undefined'){
     // we are on server , koi problem nahi new instance provide
     return makeQueryClient()
   }
