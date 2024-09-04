@@ -81,7 +81,7 @@ const AdminPage = () => {
           </CardContent>
         </Card>
       </div>
-      <div className="grid gap-2 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
         <Card className="xl:col-span-2" x-chunk="dashboard-01-chunk-4">
           <CardHeader className="flex flex-row items-center">
             <div className="grid gap-2">
@@ -213,7 +213,7 @@ const AdminPage = () => {
           <CardHeader>
             <CardTitle>Recent Sales</CardTitle>
           </CardHeader>
-          <CardContent className="grid gap-8 overflow-x-auto">
+          <CardContent className="grid gap-8">
             <div className="flex items-center gap-4">
               <Avatar className="hidden h-9 w-9 sm:flex">
                 <AvatarImage src="/avatars/01.png" alt="Avatar" />

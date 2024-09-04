@@ -13,46 +13,37 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator, 
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Sidebar from "./_components/Sidebar";
+import { ReactNode } from "react";
 
 export const description =
   "A products dashboard with a sidebar navigation and a main content area. The dashboard has a header with a search input and a user menu. The sidebar has a logo, navigation links, and a card with a call to action. The main content area shows an empty state with a call to action.";
 
+const navItems = [
+  { label: "Dashboard", href: "/admin", icon: HomeIcon },
+  { label: "Products", href: "/admin/products", icon: Package },
+  { label: "Warehouses", href: "/admin/warehouses", icon: Warehouse },
+  {
+    label: "Delivery Persons",
+    href: "/admin/delivery-persons",
+    icon: Users,
+  },
+  { label: "Orders", href: "/admin/orders", icon: ShoppingCart },
+  { label: "Iventories", href: "/admin/iventories", icon: Blocks },
+];
 
-  const navItems = [
-    { label: "Dashboard", href: "/admin", icon: HomeIcon },
-    { label: "Products", href: "/admin/products", icon: Package },
-    { label: "Warehouses", href: "/admin/warehouse", icon: Warehouse },
-    {
-      label: "Delivery Persons",
-      href: "/admin/delivery-persons",
-      icon: Users,
-    },
-    { label: "Orders", href: "/admin/orders", icon: ShoppingCart },
-    { label: "Iventories", href: "/admin/iventories", icon: Blocks },
-  ];
-
-
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <Sidebar />
-      {/* todo: change all links for mobile screens */}
       <div className="flex flex-col">
         <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
           <Sheet>
@@ -78,22 +69,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                   </Link>
                 ))}
               </nav>
-              <div className="mt-auto">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Upgrade to Pro</CardTitle>
-                    <CardDescription>
-                      Unlock all features and get unlimited access to our
-                      support team.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button size="sm" className="w-full">
-                      Upgrade
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">

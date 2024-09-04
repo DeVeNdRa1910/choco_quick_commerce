@@ -1,11 +1,11 @@
 import React from 'react'
 
-function products() {
+function dashboard() {
   return (
     <div>
-     Products 
+      dashboard
     </div>
   )
 }
 
-export default products
+export default dashboard
