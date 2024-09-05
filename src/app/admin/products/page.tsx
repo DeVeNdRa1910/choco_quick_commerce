@@ -8,6 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllProducts } from "@/http/api";
 import { Product } from "@/types";
 import ProductSheet from "./product-sheet";
+import { useNewProduct } from "@/store/product/product-store";
 
 
 function products() {
@@ -16,11 +17,13 @@ function products() {
     queryFn: getAllProducts,
   });
 
+  const {onOpen} = useNewProduct()
+
   return (
     <>
       <div className="flex justify-between items-center">
         <h3 className="text-2xl font-bold tracking-tight">Products</h3>
-        <Button size={"sm"}>Add Product</Button>
+        <Button size={"sm"} onClick={onOpen}>Add Product</Button>
         <ProductSheet />
       </div>
       <DataTable columns={columns} data={products || []} />

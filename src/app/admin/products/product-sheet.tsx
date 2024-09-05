@@ -9,30 +9,45 @@ import {
 import React from "react";
 import CreateProductForm from "./create-product-form";
 import { FormValuse } from "./create-product-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createProduct } from "@/http/api";
+import { useNewProduct } from "@/store/product/product-store";
 
 
 function ProductSheet() {
+  const queryClient = useQueryClient()
 
+  const {mutate} = useMutation({
+    mutationKey: ["create-product"],
+    mutationFn: (data: FormData) => createProduct(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({queryKey: ['products']});
+      alert('Product created');
+    }
+  })
 
-  const onSubmit = (values: FormValuse) => {
+  const formSubmitHandler = (values: FormValuse) => {
     console.log('values', values);
     const formData = new FormData();
-    formData.append("name", values.name)
-    formData.append("price", String(values.price))
-    formData.append("description", values.description)
-    formData.append("image", (values.image as FileList)[0])
-  }
+    formData.append("name", values.name);
+    formData.append("price", String(values.price));
+    formData.append("description", values.description);
+    formData.append("image", (values.image as FileList)[0]);
+
+    mutate(formData)
+  } 
+
+  const { isOpen, onClose } = useNewProduct()
 
   return (
-    <Sheet open={true}>
+    <Sheet open={isOpen} onOpenChange={onClose}>
       {/* <SheetTrigger>Open</SheetTrigger> */}
       <SheetContent className="space-y-2">
         <SheetHeader>
           <SheetTitle>Create Product</SheetTitle>
           <SheetDescription>Add new Product in the store.</SheetDescription>
         </SheetHeader>
-        <CreateProductForm onSubmit={onSubmit}/>
+        <CreateProductForm onSubmit={formSubmitHandler}/>
       </SheetContent>
     </Sheet>
   );
