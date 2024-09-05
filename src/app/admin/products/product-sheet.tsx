@@ -12,18 +12,25 @@ import { FormValuse } from "./create-product-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createProduct } from "@/http/api";
 import { useNewProduct } from "@/store/product/product-store";
-
+import { useToast } from "@/hooks/use-toast"
 
 function ProductSheet() {
   const queryClient = useQueryClient()
 
+  const { isOpen, onClose } = useNewProduct()
+  const { toast } = useToast()
   // if request is pending then isPending is true
   const {mutate, isPending} = useMutation({
     mutationKey: ["create-product"],
     mutationFn: (data: FormData) => createProduct(data),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['products']});
-      alert('Product created');
+      toast({
+        title: "Creating New Product",
+        description: "New product created successfully",
+        variant: "default"
+      })
+      onClose()
     }
   })
 
@@ -38,7 +45,7 @@ function ProductSheet() {
     mutate(formData)
   } 
 
-  const { isOpen, onClose } = useNewProduct()
+ 
 
   return (
     <Sheet open={isOpen} onOpenChange={onClose}>
