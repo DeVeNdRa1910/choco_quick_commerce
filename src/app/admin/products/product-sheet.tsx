@@ -17,7 +17,8 @@ import { useNewProduct } from "@/store/product/product-store";
 function ProductSheet() {
   const queryClient = useQueryClient()
 
-  const {mutate} = useMutation({
+  // if request is pending then isPending is true
+  const {mutate, isPending} = useMutation({
     mutationKey: ["create-product"],
     mutationFn: (data: FormData) => createProduct(data),
     onSuccess: () => {
@@ -47,7 +48,7 @@ function ProductSheet() {
           <SheetTitle>Create Product</SheetTitle>
           <SheetDescription>Add new Product in the store.</SheetDescription>
         </SheetHeader>
-        <CreateProductForm onSubmit={formSubmitHandler}/>
+        <CreateProductForm onSubmit={formSubmitHandler} disabled={isPending}/>
       </SheetContent>
     </Sheet>
   );
