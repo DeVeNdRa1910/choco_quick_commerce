@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  console.log("Data after Zod varification ", validatedData);
+  //console.log("Data after Zod varification ", validatedData);
 
   const tempData = validatedData.data;
 
