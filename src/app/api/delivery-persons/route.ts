@@ -7,33 +7,37 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   // create delivery-function
   const requestData = await request.json();
-  // console.log(requestData);
+  //console.log("requested Data: " ,requestData);
+  //console.log(typeof requestData.warehouseId);
 
-  let validatedData;
+  let validatedData = deliveryPersonSchema.safeParse(requestData);
 
-  try {
-    validatedData = deliveryPersonSchema.parse(requestData);
-  } catch (error) {
+  if (!validatedData.success) {
+    console.log("Validation Error: ", validatedData.error);
     return NextResponse.json(
       {
         message: "Failed to validate delivery person data",
-        error,
+        error: validatedData.error.errors, // detailed error list from Zod
       },
       { status: 400 }
     );
   }
 
-  console.log(validatedData);
+  console.log("Data after Zod varification ", validatedData);
+
+  const tempData = validatedData.data;
 
   try {
     // Check if delivery person with same details already exists
     const existingPerson = await db
       .select()
       .from(deliveriPersons)
-      .where(eq(deliveriPersons.phone, validatedData.phone))
+      .where(eq(deliveriPersons.phone, tempData?.phone))
       .limit(1);
 
-    if (existingPerson) {
+    if (existingPerson.length > 0) {
+      console.log(existingPerson);
+
       return NextResponse.json(
         {
           message: "Delivery person already exists with these entries",
@@ -44,7 +48,7 @@ export async function POST(request: NextRequest) {
 
     // Insert new delivery person if not exists
 
-    await db.insert(deliveriPersons).values(validatedData);
+    await db.insert(deliveriPersons).values(tempData);
     return NextResponse.json(
       {
         message: "Delivery Person created successfully",
@@ -65,7 +69,7 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   try {
     // here we joine delivery_Persons table with warehouses table
-/*     const fetchedDeliveryPersons = await db
+    /*     const fetchedDeliveryPersons = await db
       .select()
       .from(deliveriPersons)
       .leftJoin(warehouses, eq(deliveriPersons.warehouseId, warehouses.id))
@@ -75,16 +79,14 @@ export async function GET(request: NextRequest) {
 
       ham select ke andar likhenge ki hame kya kya chaihiye
 */
-      const fetchedDeliveryPersons = await db
-      .select(
-        {
-          id: deliveriPersons.id,
-          name: deliveriPersons.name,
-          phone: deliveriPersons.phone,
-          warehouse: warehouses.name,
-          pincode: warehouses.pincode,
-        }
-      )
+    const fetchedDeliveryPersons = await db
+      .select({
+        id: deliveriPersons.id,
+        name: deliveriPersons.name,
+        phone: deliveriPersons.phone,
+        warehouse: warehouses.name,
+        pincode: warehouses.pincode,
+      })
       .from(deliveriPersons)
       .leftJoin(warehouses, eq(deliveriPersons.warehouseId, warehouses.id))
       .orderBy(desc(deliveriPersons.id));
