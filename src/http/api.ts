@@ -62,13 +62,27 @@ export const getAllWarehouses = async () => {
   return allWarehouse;
 };
 
+
+
 export const getAllInventories = async () => {
-  const response = await api.get('/inventories');
-  return await response.data;
+  const response = await api.get('/Inventories');
+  const { allInventories }: any = await response.data
+  return allInventories;
 };
 
-export const createInventory = async (data: InventoryData) => {
-  const response = await api.post('/inventories', data);
+export const createInventory = async (data: FormData) => {
+
+  const structuredData = {
+    sku: String(data.get("sku")),
+    productId: Number(data.get("productId")),
+    warehouseId: Number(data.get("warehouseId")),
+  }
+
+  const response = await api.post('/Inventories', structuredData, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
   return response.data;
 };
 

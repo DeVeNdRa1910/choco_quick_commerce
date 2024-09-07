@@ -11,13 +11,13 @@ import CreateProductForm from "./create-warehouse-form";
 import { FormValuse } from "./create-warehouse-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createWarehouse } from "@/http/api";
-import { useNewProduct } from "@/store/product/product-store";
+import { useNewWarehouse } from "@/store/warehouse/warehouse-store";
 import { useToast } from "@/hooks/use-toast";
 
 function WarehouseSheet() {
   const queryClient = useQueryClient();
 
-  const { isOpen, onClose } = useNewProduct();
+  const { isOpen, onClose } = useNewWarehouse();
   const { toast } = useToast();
   // if request is pending then isPending is true
   const { mutate, isPending } = useMutation({

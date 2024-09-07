@@ -8,7 +8,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllWarehouses } from "@/http/api";
 import { Warehouse } from "@/types";
 import WarehouseSheet from "./components/warehouse-sheet";
-import { useNewProduct } from "@/store/product/product-store";
+import { useNewWarehouse } from "@/store/warehouse/warehouse-store"; 
 import { Loader2 } from "lucide-react";
 
 function warehouses() {
@@ -23,7 +23,7 @@ function warehouses() {
     queryFn: getAllWarehouses,
   });
 
-  const { onOpen } = useNewProduct();
+  const { onOpen } = useNewWarehouse();
 
   return (
     <>

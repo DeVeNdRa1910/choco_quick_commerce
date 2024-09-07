@@ -10,13 +10,13 @@ import CreateDeliveryPersonForm from "./create-deliveryPerson-form";
 import { FormValuse } from "./create-deliveryPerson-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createDeliveryPerson } from "@/http/api";
-import { useNewProduct } from "@/store/product/product-store";
+import { useNewDeliveryPerson } from "@/store/deliveryPerson/delivery-person-store";
 import { useToast } from "@/hooks/use-toast";
 
 function DeliveryPersonSheet() {
   const queryClient = useQueryClient();
 
-  const { isOpen, onClose } = useNewProduct();
+  const { isOpen, onClose } = useNewDeliveryPerson();
   const { toast } = useToast();
   // if request is pending then isPending is true
   const { mutate, isPending, isError, error } = useMutation({

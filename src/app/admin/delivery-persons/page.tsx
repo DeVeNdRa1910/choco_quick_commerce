@@ -7,7 +7,7 @@ import { columns } from "./components/columns";
 import { useQuery } from "@tanstack/react-query";
 import { getAllDeliveryPersons } from "@/http/api";
 import DeliveryPersonSheet from "./components/delivery-person-sheet";
-import { useNewProduct } from "@/store/product/product-store";
+import { useNewDeliveryPerson } from "@/store/deliveryPerson/delivery-person-store";
 import { Loader2 } from "lucide-react";
 import { DeliveryPerson as deliveryPersons } from "@/types";
 
@@ -22,7 +22,7 @@ function DeliveryPerson() {
     queryFn: getAllDeliveryPersons,
   });
 
-  const { onOpen } = useNewProduct();
+  const { onOpen } = useNewDeliveryPerson();
 
   return (
     <>
