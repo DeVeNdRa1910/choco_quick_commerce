@@ -115,7 +115,7 @@ function CreateDeliveryPersonForm({
                             key={item.id}
                             value={item.id ? item.id?.toString() : ""}
                           >
-                            {`${item.name} ${item.pincode}`}
+                            {`${item.name}     ${item.pincode}`}
                           </SelectItem>
                         ))}
                     </>

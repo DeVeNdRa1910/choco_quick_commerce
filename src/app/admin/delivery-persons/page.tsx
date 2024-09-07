@@ -3,10 +3,10 @@
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { DataTable } from "../_components/data-table";
-import { columns } from "./columns";
+import { columns } from "./components/columns";
 import { useQuery } from "@tanstack/react-query";
 import { getAllDeliveryPersons } from "@/http/api";
-import DeliveryPersonSheet from "./delivery-person-sheet";
+import DeliveryPersonSheet from "./components/delivery-person-sheet";
 import { useNewProduct } from "@/store/product/product-store";
 import { Loader2 } from "lucide-react";
 import { DeliveryPerson as deliveryPersons } from "@/types";

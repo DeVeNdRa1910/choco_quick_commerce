@@ -31,18 +31,18 @@ function DeliveryPersonSheet() {
       });
       onClose();
     },
-    onError: ()=>{
+    onError: () => {
       toast({
         title: error?.message || "Something went wrong with Inputs",
-        variant: "destructive"
-      })
-    }
+        variant: "destructive",
+      });
+    },
   });
 
   const formSubmitHandler = (values: FormValuse) => {
     console.log("values", values);
     const formData = new FormData();
-    
+
     formData.append("name", values.name);
     formData.append("phone", values.phone);
     formData.append("warehouseId", String(values.warehouseId));
