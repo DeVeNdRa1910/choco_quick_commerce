@@ -46,15 +46,20 @@ export const createDeliveryPerson = async (data: FormData) => {
   return resp.data;
 }
 
+export const createWarehouse = async (data: FormData) => {
+
+  const response = await api.post('/warehouses', data, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+  return response.data;
+};
+
 export const getAllWarehouses = async () => {
   const resp = await api.get('/warehouses');
   const {allWarehouse}: any = resp.data;
   return allWarehouse;
-};
-
-export const createWarehouse = async (data: Warehouse) => {
-  const response = await api.post('/warehouses', data);
-  return response.data;
 };
 
 export const getAllInventories = async () => {
