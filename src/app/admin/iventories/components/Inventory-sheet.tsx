@@ -19,6 +19,7 @@ function InventorySheet() {
 
   const { isOpen, onClose } = useNewInventory();
   const { toast } = useToast();
+  
   // if request is pending then isPending is true
   const { mutate, isPending } = useMutation({
     mutationKey: ["create-inventory"],
@@ -35,7 +36,8 @@ function InventorySheet() {
   });
 
   const formSubmitHandler = (values: FormValuse) => {
-    console.log("values", values);
+    //console.log("values", values);
+
     const formData = new FormData();
     formData.append("sku", values.sku);
     formData.append("warehouseId", String(values.warehouseId));

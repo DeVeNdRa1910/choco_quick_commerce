@@ -95,33 +95,33 @@ function CreateDeliveryPersonForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Warehouse ID</FormLabel>
-              <Select
-                onValueChange={(value) => field.onChange(parseInt(value))}
-                defaultValue={field.value ? field.value.toString() : ""}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select Warehouse ID" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {isLoading ? (
-                    <SelectItem value="Loading">Loading...</SelectItem>
-                  ) : (
-                    <>
-                      {warehouses &&
-                        warehouses.map((item: any) => (
-                          <SelectItem
-                            key={item.id}
-                            value={item.id ? item.id?.toString() : ""}
-                          >
-                            {`${item.name}     ${item.pincode}`}
-                          </SelectItem>
-                        ))}
-                    </>
-                  )}
-                </SelectContent>
-              </Select>
+                <Select
+                  onValueChange={(value) => field.onChange(parseInt(value))}
+                  defaultValue={field.value ? field.value.toString() : ""}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Warehouse ID" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {isLoading ? (
+                      <SelectItem value="Loading">Loading...</SelectItem>
+                    ) : (
+                      <>
+                        {warehouses &&
+                          warehouses.map((item: any) => (
+                            <SelectItem
+                              key={item.id}
+                              value={item.id ? item.id?.toString() : ""}
+                            >
+                              {`${item.name}     ${item.pincode}`}
+                            </SelectItem>
+                          ))}
+                      </>
+                    )}
+                  </SelectContent>
+                </Select>
               <FormMessage />
             </FormItem>
           )}

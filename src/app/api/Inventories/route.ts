@@ -26,6 +26,9 @@ export async function POST(request: NextRequest) {
       { status: 201 }
     );
   } catch (error) {
+
+    //todo: check database status code , and if it is duplicate value code then send the message to thhe clien
+
     return NextResponse.json(
       {
         message: "Failed to store the inventory into the database",

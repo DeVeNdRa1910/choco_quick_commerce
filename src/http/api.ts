@@ -3,6 +3,15 @@ import { api } from "./client"
 
 // api is instance of axios
 
+export const createProduct = async (data: FormData) => {
+  const resp = await api.post('/products', data, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+  return resp.data;
+}
+
 export const getAllProducts = async () => {
   const response = await api.get('/products');
   const {allProducts}: any = response.data
@@ -10,16 +19,16 @@ export const getAllProducts = async () => {
   return await allProducts as Product[];
 };
 
-export const createProduct = async (data: FormData) => {
-  const resp = await api.post('/products', data, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  });
-
+export const createDeliveryPerson = async (data: FormData) => {
+  const correctData = {
+    name: data.get("name"),
+    phone: data.get("phone"),
+    warehouseId: Number(data.get("warehouseId"))
+  }
+  
+  const resp = await api.post('/delivery-persons', correctData);
   return resp.data;
 }
-
 
 export const getAllDeliveryPersons = async () => {
   const resp = await api.get('/delivery-persons');
@@ -27,32 +36,8 @@ export const getAllDeliveryPersons = async () => {
   return fetchedDeliveryPersons as DeliveryPerson[]
 }
 
-export const createDeliveryPerson = async (data: FormData) => {
-
-  console.log( "Inside API", data);
-
-  const correctData = {
-    name: data.get("name"),
-    phone: data.get("phone"),
-    warehouseId: Number(data.get("warehouseId"))
-  }
-  
-  const resp = await api.post('/delivery-persons', correctData, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-
-  return resp.data;
-}
-
 export const createWarehouse = async (data: FormData) => {
-
-  const response = await api.post('/warehouses', data, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
+  const response = await api.post('/warehouses', data);
   return response.data;
 };
 
@@ -60,14 +45,6 @@ export const getAllWarehouses = async () => {
   const resp = await api.get('/warehouses');
   const {allWarehouse}: any = resp.data;
   return allWarehouse;
-};
-
-
-
-export const getAllInventories = async () => {
-  const response = await api.get('/Inventories');
-  const { allInventories }: any = await response.data
-  return allInventories;
 };
 
 export const createInventory = async (data: FormData) => {
@@ -78,12 +55,14 @@ export const createInventory = async (data: FormData) => {
     warehouseId: Number(data.get("warehouseId")),
   }
 
-  const response = await api.post('/Inventories', structuredData, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
+  const response = await api.post('/Inventories', structuredData);
   return response.data;
+};
+
+export const getAllInventories = async () => {
+  const response = await api.get('/Inventories');
+  const { allInventories }: any = await response.data
+  return allInventories;
 };
 
 export const getSingleProduct = async (id: string) => {

@@ -15,6 +15,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { inventoriesSchema } from "@/lib/validators/inventoriesSchema";
 import { Loader2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Product, Warehouse } from "@/types";
+import { getAllProducts, getAllWarehouses } from "@/http/api";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export type FormValuse = z.input<typeof inventoriesSchema>;
 
@@ -31,6 +35,20 @@ function CreateInventoryForm({
       sku: "",
     },
   });
+
+  const { data: warehouses, isLoading: isWarehousesLoading } = useQuery<Warehouse[]>(
+    {
+      queryKey: ['warehouse'],
+      queryFn: getAllWarehouses
+    }
+  )
+
+  const { data: products, isLoading: isProductLoading } = useQuery<Product[]>(
+    {
+      queryKey: ['products'],
+      queryFn: getAllProducts
+    }
+  )
 
   const handleFormSubmit = (values: FormValuse) => {
     onSubmit(values);
@@ -61,16 +79,33 @@ function CreateInventoryForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>warehouseId</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  {...field}
-                  onChange={(e) => {
-                    const value = parseFloat(e.target.value);
-                    field.onChange(value);
-                  }}
-                />
-              </FormControl>
+                <Select
+                  onValueChange={(value) => field.onChange(parseInt(value))}
+                  defaultValue={field.value ? field.value.toString() : ""}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Warehouse ID" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {isWarehousesLoading ? (
+                      <SelectItem value="Loading">Loading...</SelectItem>
+                    ) : (
+                      <>
+                        {warehouses &&
+                          warehouses.map((item: any) => (
+                            <SelectItem
+                              key={item.id}
+                              value={item.id ? item.id?.toString() : ""}
+                            >
+                              {`${item.name}-${item.pincode}`}
+                            </SelectItem>
+                          ))}
+                      </>
+                    )}
+                  </SelectContent>
+                </Select>
               <FormMessage />
             </FormItem>
           )}
@@ -81,16 +116,33 @@ function CreateInventoryForm({
           render={({ field }) => (
             <FormItem>
               <FormLabel>productId</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  {...field}
-                  onChange={(e) => {
-                    const value = parseFloat(e.target.value);
-                    field.onChange(value);
-                  }}
-                />
-              </FormControl>
+              <Select
+                  onValueChange={(value) => field.onChange(parseInt(value))}
+                  defaultValue={field.value ? field.value.toString() : ""}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select Product ID" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {isProductLoading ? (
+                      <SelectItem value="Loading">Loading...</SelectItem>
+                    ) : (
+                      <>
+                        {products &&
+                          products.map((item: any) => (
+                            <SelectItem
+                              key={item.id}
+                              value={item.id ? item.id?.toString() : ""}
+                            >
+                              {`${item.id}-${item.name}`}
+                            </SelectItem>
+                          ))}
+                      </>
+                    )}
+                  </SelectContent>
+                </Select>
               <FormMessage />
             </FormItem>
           )}
