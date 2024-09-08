@@ -1,5 +1,6 @@
 import { DeliveryPerson, InventoryData, OrderData, OrderStatusData, Product, Warehouse } from "@/types";
 import { api } from "./client"
+import { request } from "axios";
 
 // api is instance of axios
 
@@ -15,7 +16,7 @@ export const createProduct = async (data: FormData) => {
 export const getAllProducts = async () => {
   const response = await api.get('/products');
   const {allProducts}: any = response.data
-  console.log(allProducts); 
+  // console.log(allProducts); 
   return await allProducts as Product[];
 };
 
@@ -67,7 +68,8 @@ export const getAllInventories = async () => {
 
 export const getSingleProduct = async (id: string) => {
   const response = await api.get(`/products/${id}`);
-  return await response.data;
+  const { product }: any = response.data;
+  return product;
 };
 
 export const placeOrder = async (data: OrderData) => {

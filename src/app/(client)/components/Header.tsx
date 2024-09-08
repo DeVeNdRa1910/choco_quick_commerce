@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 function Header() {
   const pathname = usePathname();
   const session = useSession();
-  console.log("session", session);
+  //console.log("session", session);
 
   const navItems = [
     { label: "Home", href: "/" },
@@ -20,8 +20,8 @@ function Header() {
 
   return (
     <header className="">
-      <div className="flex h-10 items-center justify-center bg-brown-900 text-center text-white">
-        <span className="text-sm text-amber-900">
+      <div className="bg-amber-900 flex h-10 items-center justify-center bg-brown-900 text-center text-white">
+        <span className="text-sm">
           Order 2 Delight Dairy Choco bars today and save ₹100 instantly!
         </span>
       </div>

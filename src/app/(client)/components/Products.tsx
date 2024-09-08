@@ -17,9 +17,8 @@ const Products = () => {
     staleTime: 10 * 1000,
   });
 
-  console.log(products);
+  // console.log(products);
   
-
   return (
     <section className="bg-[#f5f5f5] px-5 py-14 md:py-20">
       <div className="mx-auto max-w-6xl">
@@ -49,7 +48,7 @@ const Products = () => {
                 return (
                   <div
                     key={product.id}
-                    className="flex flex-col items-start justify-center gap-5"
+                    className="flex flex-col items-start justify-center gap-5 shadow-lg"
                   >
                     <Image
                       src={`/assets/${product.image}`}
@@ -69,10 +68,10 @@ const Products = () => {
                         <span className="font-bold">${product.price}</span>
                       </div>
 
-                      <Link href={`/product/${product.id}`}>
+                      <Link href={`/product/${product.id}` ?? "${/product1.jpg}"}>
                         <Button
                           size={"sm"}
-                          className="mt-5 w-full bg-brown-900 hover:bg-brown-800 active:bg-brown-700"
+                          className="mt-5 w-full bg-amber-900 hover:bg-amber-800 active:bg-amber-700"
                         >
                           Buy Now
                         </Button>
