@@ -26,15 +26,19 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-// import { AxiosError } from 'axios';
-// import { useToast } from '@/components/ui/use-toast';
+import { useToast } from "@/hooks/use-toast";
+
+
+type CustomError = {
+  message: string;
+};
 
 function SingleProduct() {
   // check is user Loggedin
   const { data: session } = useSession();
   // console.log(session);
   const pathName = usePathname();
-
+  const { toast } = useToast()
   const params = useParams();
   // console.log(params);
 
@@ -60,9 +64,30 @@ function SingleProduct() {
     queryFn: () => getSingleProduct(id as string),
   });
 
+  const { mutate } = useMutation({
+    mutationKey: ['create-invoce'],
+    mutationFn: (data: FormValues) => placeOrder({...data, productId: Number(id)}),
+    onSuccess: (data: any) => {
+      window.location.href = data.paymentUrl;
+    },
+    onError: (err: any) => {
+      if (err.response?.data) {
+          const customErr = err.response.data as CustomError;
+          console.error(customErr.message);
+          toast({
+              title: customErr.message,
+              color: 'red',
+          });
+      } else {
+          console.error(err);
+          toast({ title: 'Unknown error' });
+      }
+  },
+  })
   type FormValues = z.infer<typeof orderSchema>;
   const handleFormSubmit = (values: FormValues) => {
     //submit form on Backend
+    mutate(values)
   };
 
   const qty = form.watch("qty");
