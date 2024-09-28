@@ -50,10 +50,8 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: error.message }, { status: 400 });
   }
 
-  
-
   // validate incoming data from request
-  console.log(productImageUploadResult);
+  //console.log(productImageUploadResult);
   
   try {
     validatedData = productSchema.parse({
@@ -67,13 +65,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: error.message }, { status: 400 });
   }
 
-  //saving file locally
-  const filename = `${productImage.name}`;
-
   try {
     const buffer = Buffer.from(await productImage.arrayBuffer());
     await writeFile(
-      path.join(process.cwd(), "public/assets", filename),
+      path.join(process.cwd(), "public/assets", productImage.name),
       buffer
     );
   } catch (error) {
@@ -89,9 +84,9 @@ export async function POST(request: NextRequest) {
     craetedProduct = await db
       .insert(product)
       .values({ ...validatedData, image: (productImageUploadResult as any).secure_url });
-    unlink(path.join(process.cwd(), "public/assets", filename));
+    unlink(path.join(process.cwd(), "public/assets", productImage.name));
   } catch (error) {
-    unlink(path.join(process.cwd(), "public/assets", filename));
+    unlink(path.join(process.cwd(), "public/assets", productImage.name));
     return NextResponse.json(
       { message: "Failed to delete image locally" },
       { status: 500 }
