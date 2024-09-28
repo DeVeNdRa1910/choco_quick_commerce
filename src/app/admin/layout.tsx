@@ -23,6 +23,7 @@ import {
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Sidebar from "./_components/Sidebar";
 import { ReactNode } from "react";
+import ThemeToggle from "@/components/DarkMode";
 
 export const description =
   "A products dashboard with a sidebar navigation and a main content area. The dashboard has a header with a search input and a user menu. The sidebar has a logo, navigation links, and a card with a call to action. The main content area shows an empty state with a call to action.";
@@ -72,8 +73,11 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               </nav>
             </SheetContent>
           </Sheet>
-          <div className="w-full flex-1">
+          <div className="w-full flex">
             <Badge variant={"outline"}>You are an admin</Badge>
+            <div className=" pl-4 pt-1">
+              <ThemeToggle />
+            </div>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -89,6 +93,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuSeparator />
             </DropdownMenuContent>
           </DropdownMenu>
         </header>

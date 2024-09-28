@@ -14,8 +14,9 @@ function Header() {
 
   const navItems = [
     { label: "Home", href: "/" },
-    { label: "Best Selling", href: "/best-selling" },
+    { label: "About Us", href: "/aboutus" },
     { label: "Offers", href: "/offers" },
+    { label: "Best Selling", href: "/best-selling" },
     { label: "Orders", href: "/account/orders" },
   ];
 

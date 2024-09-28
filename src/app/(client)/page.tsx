@@ -18,8 +18,6 @@ export default function Home() {
       </BackgroundBeamsWithCollision>
       <Products />
       {/* <Coupon /> use it just before the payment */}
-      <NewsLetter />
-      <About />
       <Footer />
     </>
   );

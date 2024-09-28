@@ -71,7 +71,7 @@ const Products = () => {
                       <Link href={`/product/${product.id}` ?? "${/product1.jpg}"}>
                         <Button
                           size={"sm"}
-                          className="mt-5 w-full bg-amber-900 hover:bg-amber-800 active:bg-amber-700"
+                          className="mt-5 w-full bg-amber-900 hover:bg-amber-800 active:bg-amber-700 text-white text-lg"
                         >
                           Buy Now
                         </Button>

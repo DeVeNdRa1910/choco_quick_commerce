@@ -6,7 +6,7 @@ import React from 'react';
 
 export default function NewsLetter() {
     return (
-        <section className="mx-auto max-w-6xl px-5 py-14 md:py-20">
+        <section className="mx-auto max-w-7xl px-5 py-14 md:py-20">
             <div className="relative mx-auto flex max-w-4xl flex-col items-center justify-center rounded-3xl px-10 py-14 text-white">
                 <h2 className="text-3xl font-bold tracking-tight">Stay Updated with Newsletter</h2>
                 <p className="mt-6 w-8/12 text-center">
@@ -20,7 +20,7 @@ export default function NewsLetter() {
                     />
                     <Button
                         variant="secondary"
-                        className="absolute right-0 top-1/2 mr-1 h-8 -translate-y-1/2 transform bg-white text-brown-900 hover:bg-white"
+                        className="absolute right-0 top-1/2 mr-1 h-8 -translate-y-1/2 transform bg-white text-amber-900 hover:bg-white"
                         size="sm">
                         Subscribe
                     </Button>
