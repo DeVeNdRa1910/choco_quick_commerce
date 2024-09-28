@@ -17,10 +17,10 @@ const Products = () => {
     staleTime: 10 * 1000,
   });
 
-  // console.log(products);
+  console.log(products);
   
   return (
-    <section className="bg-[#f5f5f5] px-5 py-14 md:py-20">
+    <section className="px-5 py-14 md:py-20">
       <div className="mx-auto max-w-6xl">
         <div className="flex items-center justify-center gap-5">
           <Separator className="h-0.5 w-20 bg-brown-900" />
@@ -51,7 +51,7 @@ const Products = () => {
                     className="flex flex-col items-start justify-center gap-5 shadow-lg"
                   >
                     <Image
-                      src={`/assets/${product.image}`}
+                      src={product.image}
                       alt={product.name}
                       width={0}
                       height={0}

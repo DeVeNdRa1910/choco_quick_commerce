@@ -108,12 +108,12 @@ function SingleProduct() {
               <Skeleton className="aspect-square w- [28rem] bg-amber-200" />
             ) : (
               <Image
-                src={`/assets/${product?.image}` ?? "/product1.jpg"}
-                alt={product?.name ?? "image"}
+                src={product?.image || ""}
+                alt={product?.name || ""}
                 width={0}
                 height={0}
                 sizes="100vw"
-                className="aspect-square w-[28rem] rounded-md object-cover shadow-2xl mx-auto mt-8"
+                className="aspect-square w-[28rem] h-[75vh] rounded-md object-cover shadow-2xl mx-auto mt-8"
               />
             )}
           </div>

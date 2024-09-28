@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import ThemeToggle from "@/components/DarkMode";
 
 function Header() {
   const pathname = usePathname();
@@ -19,11 +20,9 @@ function Header() {
   ];
 
   return (
-    <header className="">
-      <div className="bg-amber-900 flex h-10 items-center justify-center bg-brown-900 text-center text-white">
-        <span className="text-sm">
-          Order 2 Delight Dairy Choco bars today and save ₹100 instantly!
-        </span>
+    <header className="relative">
+      <div className="fixed z-10 right-6 top-5">
+        <ThemeToggle />
       </div>
       <nav className="flex h-14 items-center justify-center">
         <ul className="flex items-center justify-center gap-6">

@@ -16,10 +16,10 @@ export default function Home() {
       <BackgroundBeamsWithCollision>
         <SpecialProducts />
       </BackgroundBeamsWithCollision>
-      <About />
       <Products />
       {/* <Coupon /> use it just before the payment */}
       <NewsLetter />
+      <About />
       <Footer />
     </>
   );
