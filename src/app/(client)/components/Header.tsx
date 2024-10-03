@@ -21,7 +21,7 @@ function Header() {
   ];
 
   return (
-    <header className="relative">
+    <header className="relative shadow-lg shadow-amber-700 ">
       <div className="fixed z-10 right-6 top-5">
         <ThemeToggle />
       </div>

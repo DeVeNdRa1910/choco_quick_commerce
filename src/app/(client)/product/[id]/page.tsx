@@ -101,7 +101,7 @@ function SingleProduct() {
   return (
     <>
       <Header />
-      <section className="h-full bg-[#f5f5f5] ">
+      <section className="h-full ">
         <div className="w-[90vw] h-full mx-auto grid grid-cols-1 md:grid-cols-2">
           <div className="min-h-[80vh] ">
             {isLoading ? (
