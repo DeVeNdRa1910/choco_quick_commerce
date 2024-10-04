@@ -15,7 +15,6 @@ import { Currency } from "lucide-react";
 import { getServerSession } from "next-auth";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
-import { any } from "zod";
 
 export async function POST(request: NextRequest) {
   // get session
@@ -27,7 +26,7 @@ export async function POST(request: NextRequest) {
   }
 
   //validate request body
-  const requestData = request.json();
+  const requestData = await request.json();
   let validatedData;
   try {
     validatedData = await orderSchema.parse(requestData);
@@ -38,7 +37,7 @@ export async function POST(request: NextRequest) {
   console.log("validated Data", validatedData);
 
   // order creation
-  // ham chahte hai ki jitni bhi query ham DAta base se kar rahe vo sari ya to fail ho jaye ya to success ho jaye  esa nahi hona chahiye ki kuchh failed ho jaye ya kuchh pass ho jaye. Isiliye ham ye sab transection me rakhte hai
+  // ham chahte hai ki jitni bhi query ham Data base se kar rahe vo sari ya to fail ho jaye ya to success ho jaye  esa nahi hona chahiye ki kuchh failed ho jaye ya kuchh pass ho jaye. Isiliye ham ye sab transection me rakhte hai
 
   //Get warehouse according to entered pincode
   const warehouseResult = await db
@@ -161,7 +160,7 @@ export async function POST(request: NextRequest) {
       return order[0];
     });
   } catch (error) {
-    console.log(error);
+    console.log("Order not placed",error);
     return NextResponse.json(
       {
         message: transactionError
@@ -179,10 +178,9 @@ export async function POST(request: NextRequest) {
     amount: String(finalOrder.price),
     currency: "USD",
     order_id: String(finalOrder.id),
-    url_return: "http://localhost:3000/payment/return",
-    url_success: "http://localhost:3000/payment/success",
-    url_callback:
-      "https://5cf1-2401-4900-1c09-8854-fd40-a56e-5166-f47f.ngrok-free.app/api/payment/return",
+    url_return: `${process.env.APP_BASE_URL}/payment/return`,
+    url_success: `${process.env.APP_BASE_URL}/payment/success`,
+    url_callback:`${process.env.APP_BASE_URL}/api/payment/callback`,
   };
   //cryptomus ko url_callback localhost pr nahi honi chahiye to ise access kare ke liye ham ek tool use karte hai iska naam hai ngrok ye ek tunnel create karta hai running localhost or google server ke mid me or ek url return karta hai
 

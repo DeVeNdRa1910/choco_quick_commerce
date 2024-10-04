@@ -35,10 +35,10 @@ const Products = () => {
             <>
               {skeletons.map((_, i) => (
                 <div key={i} className="flex h-full w-full flex-col gap-5">
-                  <Skeleton className="aspect-square w-full rounded-md bg-brown-100" />
-                  <Skeleton className="h-5 w-full rounded-md bg-brown-100" />
-                  <Skeleton className="h-5 w-10 rounded-md bg-brown-100" />
-                  <Skeleton className="h-8 w-full rounded-md bg-brown-100" />
+                  <Skeleton className="aspect-square w-full rounded-md bg-amber-100" />
+                  <Skeleton className="h-5 w-full rounded-md bg-amber-100" />
+                  <Skeleton className="h-5 w-10 rounded-md bg-amber-100" />
+                  <Skeleton className="h-8 w-full rounded-md bg-amber-100" />
                 </div>
               ))}
             </>
@@ -48,27 +48,30 @@ const Products = () => {
                 return (
                   <div
                     key={product.id}
-                    className="flex flex-col items-start justify-center gap-5 shadow-lg"
+                    className="flex flex-col gap-5 shadow-md shadow-amber-600 rounded-md h-[70vh]"
                   >
                     <Image
                       src={product.image}
                       alt={product.name}
                       width={0}
                       height={0}
-                      sizes="100vw"
-                      style={{ width: "100%" }}
-                      className="aspect-square rounded-t-md object-cover shadow-lg hover:cursor-pointer"
+                      sizes="100"
+                      style={{ width: "100%", height:"70%" }}
+                      className="rounded-t-md object-cover object-top shadow-lg hover:cursor-pointer "
                     />
 
-                    <div className="w-full">
-                      <p className="text-lg font-semibold text-brown-900">
-                        {product.name}
-                      </p>
-                      <div className="mt-1 space-x-2">
-                        <span className="font-bold">${product.price}</span>
+                    <div className="w-full h-[30%] px-4 pb-4">
+                      
+                      <div className="flex justify-between items-center mx-2" >
+                        <p className="capitalize text-lg font-semibold">
+                          {product.name}
+                        </p>
+                        <div className="mt-1 space-x-2">
+                          <span className="font-bold">${product.price}</span>
+                        </div>
                       </div>
 
-                      <Link href={`/product/${product.id}` ?? "${/product1.jpg}"}>
+                      <Link href={`/product/${product.id}`}>
                         <Button
                           size={"sm"}
                           className="mt-5 w-full bg-amber-900 hover:bg-amber-800 active:bg-amber-700 text-white text-lg"

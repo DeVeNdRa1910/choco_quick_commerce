@@ -73,7 +73,7 @@ function SingleProduct() {
     onError: (err: any) => {
       if (err.response?.data) {
           const customErr = err.response.data as CustomError;
-          console.error(customErr.message);
+          console.error("This error due server",err);
           toast({
               title: customErr.message,
               color: 'red',
@@ -113,7 +113,7 @@ function SingleProduct() {
                 width={0}
                 height={0}
                 sizes="100vw"
-                className="aspect-square w-[28rem] h-[75vh] rounded-md object-cover shadow-2xl mx-auto mt-8"
+                className="aspect-square w-[28rem] h-[85vh] object-cover object-top rounded-md shadow-2xl mx-auto mt-8"
               />
             )}
           </div>
@@ -173,7 +173,7 @@ function SingleProduct() {
                               <FormLabel>Address</FormLabel>
                               <FormControl>
                                 <Textarea
-                                  className="border-amber-200 bg-white placeholder:text-gray-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 focus-visible:ring-offset-0"
+                                  className="border-amber-200 placeholder:text-gray-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-amber-400 focus-visible:ring-offset-0"
                                   placeholder="e.g. Open street, 55"
                                   {...field}
                                 />
@@ -193,7 +193,7 @@ function SingleProduct() {
                               <FormControl>
                                 <Input
                                   type="number"
-                                  className="h-9 border-brown-200 bg-white placeholder:text-gray-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brown-400 focus-visible:ring-offset-0"
+                                  className="h-9 border-brown-200  placeholder:text-gray-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-brown-400 focus-visible:ring-offset-0"
                                   placeholder="e.g. 123456"
                                   {...field}
                                 />
@@ -213,7 +213,7 @@ function SingleProduct() {
                               <FormControl>
                                 <Input
                                   type="number"
-                                  className="h-9 border-brown-200 bg-white placeholder:text-gray-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-red-400 focus-visible:ring-offset-0"
+                                  className="h-9 border-brown-200  placeholder:text-gray-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-red-400 focus-visible:ring-offset-0"
                                   placeholder="e.g. 3"
                                   {...field}
                                   onChange={(e) => field.onChange(parseInt(e.target.value))}
