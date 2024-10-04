@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/sheet";
 import React from "react";
 import CreateProductForm from "./create-product-form";
-import { FormValuse } from "./create-product-form";
+import { FormValues } from "./create-product-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createProduct } from "@/http/api";
 import { useNewProduct } from "@/store/product/product-store";
@@ -34,7 +34,7 @@ function ProductSheet() {
     },
   });
 
-  const formSubmitHandler = (values: FormValuse) => {
+  const formSubmitHandler = (values: FormValues) => {
     console.log("values", values);
     const formData = new FormData();
     formData.append("name", values.name);

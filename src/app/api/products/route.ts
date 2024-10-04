@@ -11,6 +11,8 @@ export async function POST(request: NextRequest) {
   //TODO: check user acces bcz admin user can only create project
 
   const data = await request.formData();
+  // console.log("Data:", data.get("name"), data.get("description"), data.get("price"), data.get("image"));
+
   
   let validatedData;
   const productImage = data.get("image");
@@ -49,6 +51,8 @@ export async function POST(request: NextRequest) {
     console.log("Error:", error.message);
     return NextResponse.json({ message: error.message }, { status: 400 });
   }
+  console.log("Cloudinary Upload Result:", productImageUploadResult);
+
 
   // validate incoming data from request
   //console.log(productImageUploadResult);
@@ -61,7 +65,7 @@ export async function POST(request: NextRequest) {
       image: (productImageUploadResult as any).secure_url, // Save Cloudinary URL in DB
     });
   } catch (error : any) {
-    console.log("Error:", error.message);
+    console.log("Zod Validation Error:", error);
     return NextResponse.json({ message: error.message }, { status: 400 });
   }
 
@@ -72,6 +76,7 @@ export async function POST(request: NextRequest) {
       buffer
     );
   } catch (error) {
+    console.log("Error due to Buffer :", error);
     return NextResponse.json(
       { message: "Failed to save the file to fs" },
       { status: 500 }
@@ -86,6 +91,7 @@ export async function POST(request: NextRequest) {
       .values({ ...validatedData, image: (productImageUploadResult as any).secure_url });
     unlink(path.join(process.cwd(), "public/assets", productImage.name));
   } catch (error) {
+    console.log("Error due to upload on DB :", error);
     unlink(path.join(process.cwd(), "public/assets", productImage.name));
     return NextResponse.json(
       { message: "Failed to delete image locally" },

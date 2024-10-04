@@ -19,9 +19,9 @@ import { productSchema } from "@/lib/validators/productSchema"
 import { Textarea } from "@/components/ui/textarea"
 import { Loader2 } from "lucide-react"
 
-export type FormValuse = z.input<typeof productSchema>
+export type FormValues = z.input<typeof productSchema>
 
-function CreateProductForm({onSubmit, disabled}:{onSubmit: (formValues: FormValuse)=>void, disabled: boolean}) {
+function CreateProductForm({onSubmit, disabled}:{onSubmit: (formValues: FormValues)=>void, disabled: boolean}) {
 
   const form = useForm<z.infer<typeof productSchema>>({
     resolver: zodResolver(productSchema),
@@ -34,7 +34,7 @@ function CreateProductForm({onSubmit, disabled}:{onSubmit: (formValues: FormValu
 
   const fileRef = form.register('image')
 
-  const handleFormSubmit = (values: FormValuse) => {
+  const handleFormSubmit = (values: FormValues) => {
     onSubmit(values)
   }
 
