@@ -17,7 +17,7 @@ const Products = () => {
     staleTime: 10 * 1000,
   });
 
-  console.log(products);
+  // console.log(products);
   
   return (
     <section className="px-5 py-14 md:py-20">

@@ -55,6 +55,10 @@ function SingleProduct() {
     },
   });
 
+
+  console.log('Baad bali productId', id);
+  
+
   const {
     data: product,
     isLoading,
@@ -68,12 +72,13 @@ function SingleProduct() {
     mutationKey: ['create-invoce'],
     mutationFn: (data: FormValues) => placeOrder({...data, productId: Number(id)}),
     onSuccess: (data: any) => {
+      console.log("Cryptomus Payment URL",data);
       window.location.href = data.paymentUrl;
     },
     onError: (err: any) => {
       if (err.response?.data) {
           const customErr = err.response.data as CustomError;
-          console.error("This error due server",err);
+          console.error("This error due server", customErr);
           toast({
               title: customErr.message,
               color: 'red',
@@ -82,7 +87,7 @@ function SingleProduct() {
           console.error(err);
           toast({ title: 'Unknown error' });
       }
-  },
+    },
   })
   type FormValues = z.infer<typeof orderSchema>;
   const handleFormSubmit = (values: FormValues) => {
@@ -101,11 +106,11 @@ function SingleProduct() {
   return (
     <>
       <Header />
-      <section className="h-full ">
-        <div className="w-[90vw] h-full mx-auto grid grid-cols-1 md:grid-cols-2">
+      <section className="h-full mt-5">
+        <div className="w-[90vw] min-h-screen mx-auto grid grid-cols-1 md:grid-cols-2">
           <div className="min-h-[80vh] ">
             {isLoading ? (
-              <Skeleton className="aspect-square w- [28rem] bg-amber-200" />
+              <Skeleton className="aspect-square w-[35rem] h-[80vh] bg-amber-200" />
             ) : (
               <Image
                 src={product?.image || ""}
@@ -144,7 +149,7 @@ function SingleProduct() {
                 <h2 className="text-sm font-semibold text-amber-700">
                   BRAND NAME
                 </h2>
-                <h2 className="text-4xl font-semibold text-amber-900">
+                <h2 className="text-4xl font-semibold text-amber-600 capitalize">
                   {product?.name}
                 </h2>
                 <div className="flex items-center gap-x-3">

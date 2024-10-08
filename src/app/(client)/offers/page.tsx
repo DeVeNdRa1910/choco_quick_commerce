@@ -7,7 +7,9 @@ function page() {
   return (
     <div>
       <Header />
-      <NewsLetter />
+      <div className='flex items-center justify-center'>
+        <NewsLetter />
+      </div>
       <BackgroundBeams />
     </div>
   )

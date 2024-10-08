@@ -11,7 +11,6 @@ import {
 } from "@/lib/db/models";
 import { orderSchema } from "@/lib/validators/orderSchema";
 import { and, desc, eq, inArray, isNull } from "drizzle-orm";
-import { Currency } from "lucide-react";
 import { getServerSession } from "next-auth";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
@@ -19,7 +18,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   // get session
   const session = await getServerSession(authOptions);
-  console.log("session", session);
+  // console.log("session", session);
 
   if (!session) {
     return NextResponse.json({ message: "Not Allowed" }, { status: 401 });
@@ -34,10 +33,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(error, { status: 400 });
   }
 
-  console.log("validated Data", validatedData);
+  // console.log("validated Data", validatedData);
+
+
 
   // order creation
-  // ham chahte hai ki jitni bhi query ham Data base se kar rahe vo sari ya to fail ho jaye ya to success ho jaye  esa nahi hona chahiye ki kuchh failed ho jaye ya kuchh pass ho jaye. Isiliye ham ye sab transection me rakhte hai
+
+ /*  ham chahte hai ki jitni bhi query ham Data base se kar rahe vo sari ya to fail ho jaye ya to success ho jaye esa nahi hona chahiye ki kuchh failed ho jaye ya kuchh pass ho jaye. Isiliye ham ye sab transection me rakhte hai */
 
   //Get warehouse according to entered pincode
   const warehouseResult = await db
@@ -72,8 +74,8 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  //start transection 
   let transactionError: string = "";
-
   let finalOrder: any;
   try {
     finalOrder = await db.transaction(async (tx) => {
@@ -104,6 +106,12 @@ export async function POST(request: NextRequest) {
         .limit(validatedData.qty)
         .for("update", { skipLocked: true }); // for lock
 
+      if (!availableStock.length) {
+        transactionError = `Stock Out`;
+        tx.rollback();
+        return; // yeh return call zaroori hai nahi to stop further execution hoga
+      }
+
       if (availableStock.length < validatedData.qty) {
         transactionError = `Stock is low, only ${availableStock.length} products available`;
         tx.rollback(); // pura transection cancel ho jayga lock chije unlock ho jayngi
@@ -111,7 +119,7 @@ export async function POST(request: NextRequest) {
       }
 
       //check delivery person is free or not
-      const availablePersons = await tx
+      const availableDeliveryPersons = await tx
         .select()
         .from(deliveryPersons)
         .where(
@@ -124,24 +132,21 @@ export async function POST(request: NextRequest) {
         .limit(1);
 
       // if delivery Persons not available
-      if (!availablePersons.length) {
+      if (!availableDeliveryPersons.length) {
         transactionError = `Delivery person is not available at the moment`;
         tx.rollback();
         return;
       }
 
-      // yaha tak pahuche hai to iska matlab
-      // stock is available and delivery person is available
+      // yaha tak pahuche hai to iska matlab stock is available and delivery person is available
 
-      // ab
-      // update inventories table and add order_id
+      // ab inventories table me order_id ko add karna hai
       await tx
         .update(inventories)
         .set({ orderId: order[0].id })
         .where(
           inArray(
-            inventories.id,
-            availableStock.map((stock) => stock.id)
+            inventories.id, availableStock.map((stock) => stock.id)
           )
         );
 
@@ -149,7 +154,7 @@ export async function POST(request: NextRequest) {
       await tx
         .update(deliveryPersons)
         .set({ orderId: order[0].id })
-        .where(eq(deliveryPersons.id, availablePersons[0].id));
+        .where(eq(deliveryPersons.id, availableDeliveryPersons[0].id));
 
       //update Orders
       await tx
@@ -160,7 +165,7 @@ export async function POST(request: NextRequest) {
       return order[0];
     });
   } catch (error) {
-    console.log("Order not placed",error);
+    console.log("Order not placed", error);
     return NextResponse.json(
       {
         message: transactionError
@@ -170,27 +175,37 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+  console.log(finalOrder);
+
+
 
   // create invoice
-  const payment_url = "https://api.cryptomus.com/v1/payment";
-
   const paymentData = {
     amount: String(finalOrder.price),
     currency: "USD",
     order_id: String(finalOrder.id),
     url_return: `${process.env.APP_BASE_URL}/payment/return`,
     url_success: `${process.env.APP_BASE_URL}/payment/success`,
-    url_callback:`${process.env.APP_BASE_URL}/api/payment/callback`,
+    url_callback: `${process.env.APP_BASE_URL}/api/payment/callback`,
   };
   //cryptomus ko url_callback localhost pr nahi honi chahiye to ise access kare ke liye ham ek tool use karte hai iska naam hai ngrok ye ek tunnel create karta hai running localhost or google server ke mid me or ek url return karta hai
 
   //javascript ka internal function hai decoding ka
-  const stringData =
-    btoa(JSON.stringify(paymentData)) + process.env.CRYPTOMUS_API_KEY;
-  // it will return bash 64 string
 
-  const sign = crypto.createHash("md").update(stringData).digest("hex");
+  //ye client side ke liye
+  const stringData = btoa(JSON.stringify(paymentData)) + process.env.CRYPTOMUS_API_KEY;
+
+  // //ye server side ke liye
+  // const stringData = Buffer.from(JSON.stringify(paymentData)).toString('base64') + process.env.CRYPTOMUS_API_KEY;
+
+    // it will return bash 64 string
+
+  // const sign = crypto.createHash("md").update(stringData).digest("hex");
+  const sign = crypto.createHash("md5").update(stringData).digest("hex");
+
   const headers = {
+    'Content-Type': 'application/json',
+    'Api-Key':  process.env.CRYPTOMUS_API_KEY,
     merchant: process.env.CRYPTOMUS_MERCHANT_ID,
     sign,
   };
@@ -271,5 +286,5 @@ export async function GET() {
     // join warehouse (deliveryId)
     // todo: 1. use pagination, 2. Put index
     .orderBy(desc(orders.id));
-  return Response.json(allOrders);
+  return NextResponse.json(allOrders);
 }
