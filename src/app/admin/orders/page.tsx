@@ -1,6 +1,6 @@
 import React from 'react'
 
-function orders() {
+function Orders() {
   return (
     <div>
       orders
@@ -8,4 +8,4 @@ function orders() {
   )
 }
 
-export default orders
+export default Orders

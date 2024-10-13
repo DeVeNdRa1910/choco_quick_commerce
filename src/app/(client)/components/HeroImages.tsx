@@ -17,7 +17,7 @@ export default function HeroImagesSlider() {
   ];
   return (
     <ImagesSlider
-      className="h-[70vh] w-[96vw] my-2 mx-4 rounded-lg"
+      className="h-[70vh] w-[96vw] my-2 mx-4 rounded-lg mt-6 "
       images={images}
     >
       <motion.div

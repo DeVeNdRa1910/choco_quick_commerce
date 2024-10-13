@@ -14,10 +14,9 @@ function Header() {
 
   const navItems = [
     { label: "Home", href: "/" },
-    { label: "About Us", href: "/aboutus" },
-    { label: "Offers", href: "/offers" },
-    { label: "Best Selling", href: "/best-selling" },
-    { label: "Orders", href: "/account/orders" },
+    { label: "About Us", href: "/Aboutus" },
+    { label: "Offers", href: "/Offers" },
+    { label: "Orders", href: "/Orders" },
   ];
 
   return (
@@ -39,11 +38,11 @@ function Header() {
               <Link href={item.href}>{item.label}</Link>
             </li>
           ))}
-          <li className="text-brown-300 underline-offset-4 transition-all hover:cursor-pointer hover:text-brown-900 hover:underline">
+          <li className="text-brown-300 underline-offset-4 transition-all hover:cursor-pointer hover:text-brown-900 hover:shadow-lg ">
             {session.status === "authenticated" ? (
-              <button onClick={() => signOut()}>Logout</button>
+              <button onClick={() => signOut()} className="px-4 py-1 rounded-lg hover:shadow-lg hover:shadow-red-700 transition-shadow">Logout</button>
             ) : (
-              <Link href="/api/auth/signin"> Sign in</Link>
+              <Link href="/api/auth/signin" className="px-4 py-1 rounded-lg hover:shadow-lg hover:shadow-green-700 transition-shadow">Sign in</Link>
             )}
           </li>
         </ul>

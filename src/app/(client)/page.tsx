@@ -1,9 +1,6 @@
-import About from "./components/About";
-import Coupon from "./components/Coupon";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import HeroImagesSlider from "./components/HeroImages";
-import NewsLetter from "./components/NewsLatter";
 import Products from "./components/Products";
 import SpecialProducts from "./components/SpecialProducts";
 import { BackgroundBeamsWithCollision } from "@/components/ui/BackgroundBeamsWithCollisionDemo";

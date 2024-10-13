@@ -28,6 +28,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
+      <meta name="cryptomus" content="16b0dbab" />
       <body className={inter.className}>
       <QueryProvider >   
         <AuthProvider session={session}>

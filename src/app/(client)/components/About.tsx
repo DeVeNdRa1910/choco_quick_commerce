@@ -15,7 +15,7 @@ export default function About() {
             Get ready to satisfy your sweet tooth with our premium chocolates,
             delivered in just 10 minutes! Each piece is crafted to perfection,
             offering a rich and indulgent taste that will leave you craving
-            more. Whether you're celebrating a special moment or simply treating
+            more. Whether you&apos;re celebrating a special moment or simply treating
             yourself, our chocolates are the perfect choice. Enjoy the
             convenience of fast delivery without compromising on flavor or
             quality! hassle-free!

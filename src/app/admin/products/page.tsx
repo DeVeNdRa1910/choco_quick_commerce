@@ -11,7 +11,7 @@ import ProductSheet from "./components/product-sheet";
 import { useNewProduct } from "@/store/product/product-store";
 import { Loader2 } from "lucide-react";
 
-function products() {
+function Products() {
   const {
     data: products,
     isLoading,
@@ -49,4 +49,4 @@ function products() {
   );
 }
 
-export default products;
+export default Products;

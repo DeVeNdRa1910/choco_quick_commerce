@@ -11,7 +11,7 @@ import WarehouseSheet from "./components/warehouse-sheet";
 import { useNewWarehouse } from "@/store/warehouse/warehouse-store"; 
 import { Loader2 } from "lucide-react";
 
-function warehouses() {
+function Warehouses() {
 
   const {
     data: warehouses,
@@ -50,4 +50,4 @@ function warehouses() {
   )
 }
 
-export default warehouses
+export default Warehouses

@@ -30,15 +30,15 @@ export const description =
 
 const navItems = [
   { label: "Dashboard", href: "/admin", icon: HomeIcon },
-  { label: "Products", href: "/admin/products", icon: Package },
-  { label: "Warehouses", href: "/admin/warehouses", icon: Warehouse },
+  { label: "Products", href: "/admin/Products", icon: Package },
+  { label: "Warehouses", href: "/admin/Warehouses", icon: Warehouse },
   {
     label: "Delivery Persons",
-    href: "/admin/delivery-persons",
+    href: "/admin/Delivery-persons",
     icon: Users,
   },
-  { label: "Orders", href: "/admin/orders", icon: ShoppingCart },
-  { label: "Iventories", href: "/admin/iventories", icon: Blocks },
+  { label: "Orders", href: "/admin/Orders", icon: ShoppingCart },
+  { label: "Iventories", href: "/admin/Iventories", icon: Blocks },
 ];
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
