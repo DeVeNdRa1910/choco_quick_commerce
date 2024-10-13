@@ -28,7 +28,6 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
 
-
 type CustomError = {
   message: string;
 };
@@ -38,7 +37,7 @@ function SingleProduct() {
   const { data: session } = useSession();
   // console.log(session);
   const pathName = usePathname();
-  const { toast } = useToast()
+  const { toast } = useToast();
   const params = useParams();
   // console.log(params);
 
@@ -55,9 +54,7 @@ function SingleProduct() {
     },
   });
 
-
-  console.log('Baad bali productId', id);
-  
+  console.log("Baad bali productId", id);
 
   const {
     data: product,
@@ -69,30 +66,31 @@ function SingleProduct() {
   });
 
   const { mutate } = useMutation({
-    mutationKey: ['create-invoce'],
-    mutationFn: (data: FormValues) => placeOrder({...data, productId: Number(id)}),
+    mutationKey: ["create-invoce"],
+    mutationFn: (data: FormValues) =>
+      placeOrder({ ...data, productId: Number(id) }),
     onSuccess: (data: any) => {
-      console.log("Cryptomus Payment URL",data);
+      console.log("Cryptomus Payment URL", data);
       window.location.href = data.paymentUrl;
     },
     onError: (err: any) => {
       if (err.response?.data) {
-          const customErr = err.response.data as CustomError;
-          console.error("This error due server", customErr);
-          toast({
-              title: customErr.message,
-              color: 'red',
-          });
+        const customErr = err.response.data as CustomError;
+        console.error("This error due server", customErr);
+        toast({
+          title: customErr.message,
+          color: "red",
+        });
       } else {
-          console.error(err);
-          toast({ title: 'Unknown error' });
+        console.error(err);
+        toast({ title: "Unknown error" });
       }
     },
-  })
+  });
   type FormValues = z.infer<typeof orderSchema>;
   const handleFormSubmit = (values: FormValues) => {
     //submit form on Backend
-    mutate(values)
+    mutate(values);
   };
 
   const qty = form.watch("qty");
@@ -172,7 +170,7 @@ function SingleProduct() {
                       <FormField
                         control={form.control}
                         name="address"
-                        render={({field}) => {
+                        render={({ field }) => {
                           return (
                             <FormItem className="w-3/6">
                               <FormLabel>Address</FormLabel>
@@ -191,7 +189,7 @@ function SingleProduct() {
                       <FormField
                         control={form.control}
                         name="pincode"
-                        render={({field}) => {
+                        render={({ field }) => {
                           return (
                             <FormItem className="w-2/6">
                               <FormLabel>Pincode</FormLabel>
@@ -211,7 +209,7 @@ function SingleProduct() {
                       <FormField
                         control={form.control}
                         name="qty"
-                        render={({field}) => {
+                        render={({ field }) => {
                           return (
                             <FormItem className="w-1/6">
                               <FormLabel>Qty</FormLabel>
@@ -221,7 +219,9 @@ function SingleProduct() {
                                   className="h-9 border-brown-200  placeholder:text-gray-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-red-400 focus-visible:ring-offset-0"
                                   placeholder="e.g. 3"
                                   {...field}
-                                  onChange={(e) => field.onChange(parseInt(e.target.value))}
+                                  onChange={(e) =>
+                                    field.onChange(parseInt(e.target.value))
+                                  }
                                 />
                               </FormControl>
                               <FormMessage className="text-xs" />
@@ -234,8 +234,8 @@ function SingleProduct() {
                     <div className="flex items-center justify-between">
                       <span className="text-3xl font-semibold">₹{price}</span>
                       {session ? (
-                        <Button type="submit" disabled={isPending}>
-                          {isPending && (
+                        <Button type="submit" disabled={isLoading}>
+                          {isLoading && (
                             <>
                               <Loader2 className="mr-2 size-5 animate-spin" />
                             </>

@@ -192,15 +192,10 @@ export async function POST(request: NextRequest) {
 
   //javascript ka internal function hai decoding ka
 
-  //ye client side ke liye
-  const stringData = btoa(JSON.stringify(paymentData)) + process.env.CRYPTOMUS_API_KEY;
 
-  // //ye server side ke liye
-  // const stringData = Buffer.from(JSON.stringify(paymentData)).toString('base64') + process.env.CRYPTOMUS_API_KEY;
+  // it will return bash 64 string
+  const stringData = Buffer.from((JSON.stringify(paymentData)) + process.env.CRYPTOMUS_API_KEY).toString('base64');
 
-    // it will return bash 64 string
-
-  // const sign = crypto.createHash("md").update(stringData).digest("hex");
   const sign = crypto.createHash("md5").update(stringData).digest("hex");
 
   const headers = {
